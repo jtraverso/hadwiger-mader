@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "HadwigerMader.mader",
+    "HadwigerMader.exists_degree_le_two",
+    "HadwigerMader.card_edgeFinset_le",
+    "HadwigerMader.colorable_two_of_not_isMinor_K3",
+    "HadwigerMader.colorable_three_of_not_isMinor_K4"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
