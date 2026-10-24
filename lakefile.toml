@@ -1,6 +1,6 @@
 name = "clique_minors"
 version = "0.1.0"
-defaultTargets = ["CliqueMinorsLib", "Challenge", "Solution"]
+defaultTargets = ["Solution"]
 requiresModuleSystem = true
 
 [leanOptions]
@@ -9,17 +9,14 @@ weak.linter.mathlibStandardSet = true
 
 [[require]]
 name = "mathlib"
-scope = "leanprover-community"
+git = "https://github.com/leanprover-community/mathlib4.git"
 rev = "v4.35.0-rc3"
 
 [[lean_lib]]
 name = "CliqueMinorsLib"
-globs = ["CliqueMinorsLib.+"]
-
-[[lean_lib]]
-name = "Challenge"
-roots = ["Challenge"]
 
 [[lean_lib]]
 name = "Solution"
-roots = ["Solution"]
+
+[[lean_lib]]
+name = "Challenge"

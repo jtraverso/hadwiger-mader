@@ -5,8 +5,7 @@ Authors: Juan Pablo Traverso Gianini
 -/
 module
 
-public import Mathlib
-public import CliqueMinorsLib.Minors
+public import CliqueMinorsLib.K5Density
 
 /-!
 # Proofs of the statements in `Challenge.lean`
@@ -80,5 +79,23 @@ theorem colorable_three_of_not_isMinor_K4 [Finite V] (G : SimpleGraph V)
     (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 4)) G) : G.Colorable 3 :=
   CliqueMinors.colorable_three_of_not_isMinor_K4 G
     (fun h' => h ((isMinor_iff_lib _ G).2 h'))
+
+/-- A finite minor has no more vertices than its host graph. -/
+theorem card_le_of_isMinor [Fintype V] [Fintype W]
+    (H : SimpleGraph W) (G : SimpleGraph V) (h : IsMinor H G) :
+    Fintype.card W ≤ Fintype.card V :=
+  CliqueMinors.card_le_of_isMinor H G ((isMinor_iff_lib H G).mp h)
+
+/-- Mader's K₅ edge threshold for n ≥ 3, stated without truncated subtraction. -/
+theorem mader_K5 [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hn : 3 ≤ Fintype.card V) (h : 3 * Fintype.card V ≤ G.edgeFinset.card + 5) :
+    IsMinor (⊤ : SimpleGraph (Fin 5)) G :=
+  (isMinor_iff_lib _ G).mpr (CliqueMinors.mader_K5 G hn h)
+
+/-- K₅-minor-free finite graphs on n ≥ 3 vertices have at most 3n − 6 edges. -/
+theorem card_edgeFinset_le_K5 [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hn : 3 ≤ Fintype.card V) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 5)) G) :
+    G.edgeFinset.card + 6 ≤ 3 * Fintype.card V :=
+  CliqueMinors.card_edgeFinset_le_K5 G hn (fun h' => h ((isMinor_iff_lib _ G).mpr h'))
 
 end HadwigerMader

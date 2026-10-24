@@ -5,7 +5,17 @@ Authors: Juan Pablo Traverso Gianini
 -/
 module
 
-public import Mathlib
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Tauto
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.NormNum
 
 /-!
 # Graph operations used in the clique-minor arguments
@@ -25,10 +35,10 @@ variable {V : Type*}
 
 section GraphOps
 
-open scoped Classical
 
 variable [Fintype V]
 
+open Classical in
 /-- Contraction of the vertex `y` into the vertex `x`, keeping the vertex type: `y` becomes
 isolated and `x` receives the former neighbours of `y`. -/
 def contractG (G : SimpleGraph V) (x y : V) : SimpleGraph V where
@@ -40,29 +50,34 @@ def contractG (G : SimpleGraph V) (x y : V) : SimpleGraph V where
     · exact Or.inr (Or.inl h)⟩⟩
   loopless := ⟨fun _ h => h.1 rfl⟩
 
+open Classical in
 omit [Fintype V] in
 theorem contractG_adj {G : SimpleGraph V} {x y a b : V} :
     (contractG G x y).Adj a b ↔
       a ≠ b ∧ a ≠ y ∧ b ≠ y ∧ (G.Adj a b ∨ (a = x ∧ G.Adj y b) ∨ (b = x ∧ G.Adj y a)) :=
   Iff.rfl
 
+open Classical in
 /-- The graph induced by `G` on the neighbourhood of `x` (as a graph on the same vertex type). -/
 def coneG (G : SimpleGraph V) (x : V) : SimpleGraph V where
   Adj a b := G.Adj a b ∧ G.Adj x a ∧ G.Adj x b
   symm := ⟨fun _ _ h => ⟨h.1.symm, h.2.2, h.2.1⟩⟩
   loopless := ⟨fun _ h => h.1.ne rfl⟩
 
+open Classical in
 omit [Fintype V] in
 theorem coneG_adj {G : SimpleGraph V} {x a b : V} :
     (coneG G x).Adj a b ↔ G.Adj a b ∧ G.Adj x a ∧ G.Adj x b :=
   Iff.rfl
 
+open Classical in
 theorem exists_adj_of_card_pos {G : SimpleGraph V} (h : 0 < G.edgeFinset.card) :
     ∃ a b, G.Adj a b := by
   obtain ⟨e, he⟩ := Finset.card_pos.1 h
   induction e using Sym2.ind with
   | _ a b => exact ⟨a, b, by simpa using he⟩
 
+open Classical in
 theorem card_edge_contract {G : SimpleGraph V} {x y : V} (hxy : G.Adj x y) :
     G.edgeFinset.card ≤ (contractG G x y).edgeFinset.card + 1 +
       (G.neighborFinset x ∩ G.neighborFinset y).card := by
@@ -111,6 +126,7 @@ theorem card_edge_contract {G : SimpleGraph V} {x y : V} (hxy : G.Adj x y) :
   rw [Finset.card_union_of_disjoint hdisj, himg] at h5
   omega
 
+open Classical in
 omit [Fintype V] in
 theorem contract_support {G : SimpleGraph V} {S : Finset V} {x y : V} (hxy : G.Adj x y)
     (hsupp : ∀ a b, G.Adj a b → a ∈ S) :
@@ -122,6 +138,7 @@ theorem contract_support {G : SimpleGraph V} {S : Finset V} {x y : V} (hxy : G.A
   · exact hsupp _ _ hxy
   · exact hsupp _ _ h.symm
 
+open Classical in
 theorem contract_degree {G : SimpleGraph V} {S : Finset V} {x y : V} (k : ℕ) (hxy : G.Adj x y)
     (hdeg : ∀ v ∈ S, k ≤ G.degree v)
     (hmerge : k ≤ (((G.neighborFinset x ∪ G.neighborFinset y).erase x).erase y).card)
@@ -167,6 +184,7 @@ theorem contract_degree {G : SimpleGraph V} {S : Finset V} {x y : V} (k : ℕ) (
     exact (hdeg v hvS).trans ((card_neighborFinset_eq_degree G v).symm.le.trans
       (Finset.card_le_card hsub))
 
+open Classical in
 theorem cone_edges {G : SimpleGraph V} {x : V} {m : ℕ}
     (hc : ∀ v, G.Adj x v → m ≤ (G.neighborFinset x ∩ G.neighborFinset v).card) :
     m * (G.neighborFinset x).card ≤ 2 * (coneG G x).edgeFinset.card := by
@@ -185,6 +203,7 @@ theorem cone_edges {G : SimpleGraph V} {x : V} {m : ℕ}
     _ ≤ ∑ v, (coneG G x).degree v :=
         Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) (fun _ _ _ => Nat.zero_le _)
 
+open Classical in
 omit [Fintype V] in
 theorem three_le_card {s : Finset V} {p q r : V} (hp : p ∈ s) (hq : q ∈ s) (hr : r ∈ s)
     (hpq : p ≠ q) (hpr : p ≠ r) (hqr : q ≠ r) : 3 ≤ s.card := by
@@ -194,6 +213,7 @@ theorem three_le_card {s : Finset V} {p q r : V} (hp : p ∈ s) (hq : q ∈ s) (
   simp only [Finset.mem_insert, Finset.mem_singleton] at ht
   rcases ht with rfl | rfl | rfl <;> assumption
 
+open Classical in
 omit [Fintype V] in
 theorem exists_mem_ne_ne {s : Finset V} (h : 3 ≤ s.card) (p q : V) :
     ∃ z ∈ s, z ≠ p ∧ z ≠ q := by
@@ -203,6 +223,7 @@ theorem exists_mem_ne_ne {s : Finset V} (h : 3 ≤ s.card) (p q : V) :
   simp only [Finset.mem_erase] at hz
   exact ⟨z, hz.2.2, hz.2.1, hz.1⟩
 
+open Classical in
 omit [Fintype V] in
 theorem eq_of_card_le_three {s : Finset V} (h : s.card ≤ 3) {p q r : V} (hp : p ∈ s)
     (hq : q ∈ s) (hr : r ∈ s) (hpq : p ≠ q) (hpr : p ≠ r) (hqr : q ≠ r) {t : V} (ht : t ∈ s) :
@@ -218,11 +239,13 @@ theorem eq_of_card_le_three {s : Finset V} (h : s.card ≤ 3) {p q r : V} (hp : 
     rcases hu with rfl | rfl | rfl | rfl <;> assumption
   omega
 
+open Classical in
 theorem mem_merged {G : SimpleGraph V} {x y t : V} :
     t ∈ ((G.neighborFinset x ∪ G.neighborFinset y).erase x).erase y ↔
       t ≠ y ∧ t ≠ x ∧ (G.Adj x t ∨ G.Adj y t) := by
   simp
 
+open Classical in
 /-- Two-vertex replacement used in Dirac's argument: delete `x` and `b`, add the edge `ac`. -/
 def opG (G : SimpleGraph V) (x b a c : V) : SimpleGraph V where
   Adj u v := u ≠ v ∧ u ≠ x ∧ u ≠ b ∧ v ≠ x ∧ v ≠ b ∧
@@ -234,12 +257,14 @@ def opG (G : SimpleGraph V) (x b a c : V) : SimpleGraph V where
     · exact Or.inr (Or.inl ⟨h.2, h.1⟩)⟩⟩
   loopless := ⟨fun _ h => h.1 rfl⟩
 
+open Classical in
 omit [Fintype V] in
 theorem opG_adj {G : SimpleGraph V} {x b a c u v : V} :
     (opG G x b a c).Adj u v ↔ u ≠ v ∧ u ≠ x ∧ u ≠ b ∧ v ≠ x ∧ v ≠ b ∧
       (G.Adj u v ∨ (u = a ∧ v = c) ∨ (u = c ∧ v = a)) :=
   Iff.rfl
 
+open Classical in
 omit [Fintype V] in
 theorem deleteIncidenceSet_supp {G : SimpleGraph V} {S : Finset V} {v : V}
     (hsupp : ∀ a b, G.Adj a b → a ∈ S) :
@@ -248,10 +273,12 @@ theorem deleteIncidenceSet_supp {G : SimpleGraph V} {S : Finset V} {v : V}
   rw [deleteIncidenceSet_adj] at h
   exact Finset.mem_erase.2 ⟨h.2.1, hsupp _ _ h.1⟩
 
+open Classical in
 omit [Fintype V] in
 theorem deleteIncidenceSet_le' (G : SimpleGraph V) (v : V) : G.deleteIncidenceSet v ≤ G :=
   fun _ _ h => (deleteIncidenceSet_adj.1 h).1
 
+open Classical in
 theorem card_edges_deleteIncidenceSet (G G' : SimpleGraph V) (v : V)
     (hG' : G' = G.deleteIncidenceSet v) :
     G.edgeFinset.card = G'.edgeFinset.card + G.degree v := by

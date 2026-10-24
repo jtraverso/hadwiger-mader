@@ -1,0 +1,21 @@
+Resolving dependencies
+Building Challenge
+⚠ [1204/1205] Replayed Challenge
+warning: Challenge.lean:53:8: declaration uses `sorry`
+warning: Challenge.lean:60:8: declaration uses `sorry`
+warning: Challenge.lean:65:8: declaration uses `sorry`
+warning: Challenge.lean:72:8: declaration uses `sorry`
+warning: Challenge.lean:78:8: declaration uses `sorry`
+warning: Challenge.lean:83:8: declaration uses `sorry`
+warning: Challenge.lean:89:8: declaration uses `sorry`
+warning: Challenge.lean:95:8: declaration uses `sorry`
+Build completed successfully (1205 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, HadwigerMader.mader, HadwigerMader.exists_degree_le_two, HadwigerMader.card_edgeFinset_le, HadwigerMader.colorable_two_of_not_isMinor_K3, HadwigerMader.colorable_three_of_not_isMinor_K4, HadwigerMader.card_le_of_isMinor, HadwigerMader.mader_K5, HadwigerMader.card_edgeFinset_le_K5, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+Build completed successfully (1285 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, HadwigerMader.mader, HadwigerMader.exists_degree_le_two, HadwigerMader.card_edgeFinset_le, HadwigerMader.colorable_two_of_not_isMinor_K3, HadwigerMader.colorable_three_of_not_isMinor_K4, HadwigerMader.card_le_of_isMinor, HadwigerMader.mader_K5, HadwigerMader.card_edgeFinset_le_K5, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Running Lean default kernel on solution
+Lean default kernel accepts the solution
+Your solution is okay!

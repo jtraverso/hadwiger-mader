@@ -1,0 +1,8 @@
+'HadwigerMader.mader' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.exists_degree_le_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.card_edgeFinset_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.colorable_two_of_not_isMinor_K3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.colorable_three_of_not_isMinor_K4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.card_le_of_isMinor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.mader_K5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HadwigerMader.card_edgeFinset_le_K5' depends on axioms: [propext, Classical.choice, Quot.sound]

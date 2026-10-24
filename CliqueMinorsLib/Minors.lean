@@ -5,7 +5,6 @@ Authors: Juan Pablo Traverso Gianini
 -/
 module
 
-public import Mathlib
 public import CliqueMinorsLib.GraphOps
 
 /-!
@@ -229,10 +228,10 @@ end Helpers
 
 section Counting
 
-open scoped Classical
 
 variable [Fintype V]
 
+open Classical in
 theorem mader_aux (r : ℕ) : ∀ (G : SimpleGraph V) (S : Finset V), S.Nonempty →
     (∀ a b, G.Adj a b → a ∈ S) → 2 ^ r * S.card ≤ 8 * G.edgeFinset.card →
     IsMinor (⊤ : SimpleGraph (Fin r)) G := by
@@ -296,10 +295,10 @@ end Counting
 
 section Dirac
 
-open scoped Classical
 
 variable [Fintype V]
 
+open Classical in
 omit [Fintype V] in
 theorem isMinor_K4_of_clique {G : SimpleGraph V} {x a b c : V} (hxa : G.Adj x a) (hxb : G.Adj x b)
     (hxc : G.Adj x c) (hab : G.Adj a b) (hac : G.Adj a c) (hbc : G.Adj b c) :
@@ -308,6 +307,7 @@ theorem isMinor_K4_of_clique {G : SimpleGraph V} {x a b c : V} (hxa : G.Adj x a)
   fin_cases i <;> fin_cases j <;> first | exact absurd rfl h |
     simp [hxa, hxb, hxc, hab, hac, hbc, hxa.symm, hxb.symm, hxc.symm, hab.symm, hac.symm, hbc.symm]
 
+open Classical in
 /-- The hypotheses available in the minimal-counterexample argument for Dirac's theorem. -/
 structure DiracCtx (G : SimpleGraph V) (S : Finset V) : Prop where
   supp : ∀ a b, G.Adj a b → a ∈ S
@@ -321,13 +321,16 @@ namespace DiracCtx
 
 variable {G : SimpleGraph V} {S : Finset V}
 
+open Classical in
 theorem deg' (H : DiracCtx G S) {v w : V} (h : G.Adj v w) : 3 ≤ G.degree v :=
   H.deg v (H.supp v w h)
 
+open Classical in
 theorem card_nbr (H : DiracCtx G S) {v w : V} (h : G.Adj v w) :
     3 ≤ (G.neighborFinset v).card := by
   rw [card_neighborFinset_eq_degree]; exact H.deg' h
 
+open Classical in
 theorem contract (H : DiracCtx G S) {x y : V} (hxy : G.Adj x y)
     (hmerge : 3 ≤ (((G.neighborFinset x ∪ G.neighborFinset y).erase x).erase y).card)
     (hcommon : ∀ z, G.Adj x z → G.Adj y z → 4 ≤ G.degree z) : False := by
@@ -339,6 +342,7 @@ theorem contract (H : DiracCtx G S) {x y : V} (hxy : G.Adj x y)
     ⟨x, Finset.mem_erase.2 ⟨hxy.ne, H.supp _ _ hxy⟩⟩ (contract_support hxy H.supp)
     (contract_degree 3 hxy H.deg hmerge hcommon)
 
+open Classical in
 theorem op (H : DiracCtx G S) {x a b c : V}
     (hx : ∀ t, G.Adj x t ↔ t = a ∨ t = b ∨ t = c)
     (hb : ∀ t, G.Adj b t → t = x ∨ t = a ∨ t = c)
@@ -410,6 +414,7 @@ theorem op (H : DiracCtx G S) {x a b c : V}
     · rintro rfl
       rcases hb v ht.symm with h | h | h <;> contradiction
 
+open Classical in
 theorem step_nbr (H : DiracCtx G S) {x a b c : V}
     (hx : ∀ t, G.Adj x t ↔ t = a ∨ t = b ∨ t = c) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
     G.Adj a b ∨ G.Adj a c := by
@@ -432,6 +437,7 @@ theorem step_nbr (H : DiracCtx G S) {x a b c : V}
     · exact absurd hat hn.1
     · exact absurd hat hn.2
 
+open Classical in
 theorem deg_four (H : DiracCtx G S) {x a b c : V}
     (hx : ∀ t, G.Adj x t ↔ t = a ∨ t = b ∨ t = c)
     (hb : ∀ t, G.Adj b t → t = x ∨ t = a ∨ t = c)
@@ -470,6 +476,7 @@ theorem deg_four (H : DiracCtx G S) {x a b c : V}
     · exact absurd hzt hzb'
     · exact absurd hzt (G.loopless.irrefl _)
 
+open Classical in
 theorem center (H : DiracCtx G S) {x a b c : V}
     (hx : ∀ t, G.Adj x t ↔ t = a ∨ t = b ∨ t = c) (hab' : a ≠ b) (hac' : a ≠ c) (hbc' : b ≠ c)
     (hab : G.Adj a b) (hbc : G.Adj b c) (hac : ¬ G.Adj a c) : False := by
@@ -499,6 +506,7 @@ theorem center (H : DiracCtx G S) {x a b c : V}
     (fun t ht => by rcases hb t ht with h | h | h <;> tauto) hbc.symm (fun h => hac h.symm)
   exact H.op hx hb hab hbc hac hac' ha4 hc4
 
+open Classical in
 theorem false_of_deg_three (H : DiracCtx G S) {x : V} (hx3 : G.degree x = 3) : False := by
   obtain ⟨a, b, c, hab, hac, hbc, hN⟩ := Finset.card_eq_three.1
     ((card_neighborFinset_eq_degree G x).trans hx3)
@@ -526,6 +534,7 @@ theorem false_of_deg_three (H : DiracCtx G S) {x : V} (hx3 : G.degree x = 3) : F
 
 end DiracCtx
 
+open Classical in
 theorem dirac_aux : ∀ (n : ℕ) (G : SimpleGraph V) (S : Finset V), S.card = n → S.Nonempty →
     (∀ a b, G.Adj a b → a ∈ S) → (∀ v ∈ S, 3 ≤ G.degree v) →
     IsMinor (⊤ : SimpleGraph (Fin 4)) G := by
@@ -601,10 +610,10 @@ end Dirac
 
 section Removal
 
-open scoped Classical
 
 variable [Fintype V]
 
+open Classical in
 theorem k3_aux : ∀ (n : ℕ) (G : SimpleGraph V) (S : Finset V), S.card = n → S.Nonempty →
     (∀ a b, G.Adj a b → a ∈ S) → (∀ v ∈ S, 2 ≤ G.degree v) →
     IsMinor (⊤ : SimpleGraph (Fin 3)) G := by
@@ -640,6 +649,7 @@ theorem k3_aux : ∀ (n : ℕ) (G : SimpleGraph V) (S : Finset V), S.card = n �
   · exact mem_merged.2 ⟨hpy, hp.ne.symm, Or.inl hp⟩
   · exact mem_merged.2 ⟨hq.ne.symm, hqx, Or.inr hq⟩
 
+open Classical in
 theorem exists_low_deg_K4 (G : SimpleGraph V) (S : Finset V) (hS : S.Nonempty)
     (hsupp : ∀ a b, G.Adj a b → a ∈ S) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 4)) G) :
     ∃ v ∈ S, G.degree v < 3 := by
@@ -647,6 +657,7 @@ theorem exists_low_deg_K4 (G : SimpleGraph V) (S : Finset V) (hS : S.Nonempty)
   simp only [not_exists, not_and, not_lt] at hc
   exact h (dirac_aux _ G S rfl hS hsupp hc)
 
+open Classical in
 theorem exists_low_deg_K3 (G : SimpleGraph V) (S : Finset V) (hS : S.Nonempty)
     (hsupp : ∀ a b, G.Adj a b → a ∈ S) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 3)) G) :
     ∃ v ∈ S, G.degree v < 2 := by
@@ -654,6 +665,7 @@ theorem exists_low_deg_K3 (G : SimpleGraph V) (S : Finset V) (hS : S.Nonempty)
   simp only [not_exists, not_and, not_lt] at hc
   exact h (k3_aux _ G S rfl hS hsupp hc)
 
+open Classical in
 theorem edges_aux : ∀ (n : ℕ) (G : SimpleGraph V) (S : Finset V), S.card = n → 2 ≤ n →
     (∀ a b, G.Adj a b → a ∈ S) → ¬ IsMinor (⊤ : SimpleGraph (Fin 4)) G →
     G.edgeFinset.card + 3 ≤ 2 * n := by
@@ -688,6 +700,7 @@ theorem edges_aux : ∀ (n : ℕ) (G : SimpleGraph V) (S : Finset V), S.card = n
   · have := ihn (n - 1) (by omega) G' (S.erase v) hcard (by omega) hsupp' hK'
     omega
 
+open Classical in
 theorem color_aux (k : ℕ) (hk : 1 ≤ k) (P : SimpleGraph V → Prop)
     (hP : ∀ G G' : SimpleGraph V, G' ≤ G → P G → P G')
     (hlow : ∀ (G : SimpleGraph V) (S : Finset V), S.Nonempty → (∀ a b, G.Adj a b → a ∈ S) →
