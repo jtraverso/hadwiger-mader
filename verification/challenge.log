@@ -1,0 +1,10 @@
+⚠ [1204/1205] Built Challenge (766ms)
+warning: Challenge.lean:53:8: declaration uses `sorry`
+warning: Challenge.lean:60:8: declaration uses `sorry`
+warning: Challenge.lean:65:8: declaration uses `sorry`
+warning: Challenge.lean:72:8: declaration uses `sorry`
+warning: Challenge.lean:78:8: declaration uses `sorry`
+warning: Challenge.lean:83:8: declaration uses `sorry`
+warning: Challenge.lean:89:8: declaration uses `sorry`
+warning: Challenge.lean:95:8: declaration uses `sorry`
+Build completed successfully (1205 jobs).

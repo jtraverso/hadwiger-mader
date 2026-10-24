@@ -1,153 +1,188 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
-version: "v0.4"
-
+version: v0.4
 project:
-  name: "Mader's theorem and Hadwiger's conjecture for t ≤ 4"
-  description: >-
-    A Lean 4 / Mathlib formalization of Mader's theorem (a nonempty finite graph of average degree
-    at least 2^(r−2) has a K_r minor), of Dirac's lemma (a graph without a K4 minor has a vertex
-    of degree at most two, hence at most 2n − 3 edges for n ≥ 2), and of Hadwiger's conjecture for
-    t ≤ 4 (graphs without a K3 minor are 2-colourable, graphs without a K4 minor are
-    3-colourable). Minors are branch-set models.
+  name: Mader's clique-minor density bounds and Hadwiger for t ≤ 4
+  description: A Lean 4 / Mathlib formalization of Mader's theorem (a nonempty finite graph of average
+    degree at least 2^(r−2) has a K_r minor), of Dirac's lemma (a graph without a K4 minor has a vertex
+    of degree at most two, hence at most 2n − 3 edges for n ≥ 2), and of Hadwiger's conjecture for t
+    ≤ 4 (graphs without a K3 minor are 2-colourable, graphs without a K4 minor are 3-colourable). Minors
+    are branch-set models. The extension proves that n ≥ 3 and e ≥ 3n − 5 force a K5 minor, the contrapositive
+    e ≤ 3n − 6 for K5-minor-free graphs, and that finite minors have no more vertices than their host.
   authors:
-    - "Juan Pablo Traverso Gianini"
-  license: "Apache-2.0"
+  - Juan Pablo Traverso Gianini
+  license: Apache-2.0
   responsible_maintainers:
-    - "Juan Pablo Traverso Gianini"
-
+  - Juan Pablo Traverso Gianini
 classification:
-  arxiv: ["math.CO"]
-  msc2020: ["05C83", "05C15", "05C35"]
-
+  arxiv:
+  - math.CO
+  msc2020:
+  - 05C83
+  - 05C15
+  - 05C35
 sources:
-  - title: "Homomorphieeigenschaften und mittlere Kantendichte von Graphen"
-    authors:
-      - "W. Mader"
-    id: "doi:10.1007/BF01364272"
-    type: "paper"
-    location: "Mathematische Annalen 174 (1967), 265–268"
-    relationship: "formalizes"
-    note: "Average degree at least 2^(r−2) forces a K_r minor; the formal proof follows Diestel's presentation (Prop. 7.2.1)."
-    license: "unknown"
-    author_endorsement: "n/a"
-  - title: "A property of 4-chromatic graphs and some remarks on critical graphs"
-    authors:
-      - "G. A. Dirac"
-    id: "doi:10.1112/jlms/s1-27.1.85"
-    type: "paper"
-    location: "Journal of the London Mathematical Society 27 (1952), 85–92"
-    relationship: "formalizes"
-    note: "Graphs without a K4 minor (equivalently, without a subdivided K4) are 3-colourable; here via a vertex of degree at most two."
-    license: "unknown"
-    author_endorsement: "n/a"
-  - title: "Über eine Klassifikation der Streckenkomplexe"
-    authors:
-      - "H. Hadwiger"
-    type: "paper"
-    location: "Vierteljahrsschrift der Naturforschenden Gesellschaft in Zürich 88 (1943), 133–142"
-    relationship: "formalizes"
-    note: "Hadwiger's conjecture and its proof for t ≤ 4; the cases t = 3 and t = 4 are formalized."
-    license: "unknown"
-    author_endorsement: "n/a"
-  - title: "Graph Theory (5th edition)"
-    authors:
-      - "Reinhard Diestel"
-    id: "doi:10.1007/978-3-662-53622-3"
-    type: "book"
-    location: "Graduate Texts in Mathematics 173, Springer (2017)"
-    relationship: "background"
-    note: "Proposition 7.2.1 (Mader's bound), followed for the proof."
-    license: "unknown"
-    author_endorsement: "n/a"
-
+- title: Homomorphieeigenschaften und mittlere Kantendichte von Graphen
+  authors:
+  - W. Mader
+  id: doi:10.1007/BF01364272
+  type: paper
+  location: Mathematische Annalen 174 (1967), 265–268
+  relationship: formalizes
+  note: Average degree at least 2^(r−2) forces a K_r minor; the formal proof follows Diestel's presentation
+    (Prop. 7.2.1).
+  license: unknown
+  author_endorsement: n/a
+- title: Homomorphiesätze für Graphen
+  authors:
+  - W. Mader
+  id: doi:10.1007/BF01350657
+  type: paper
+  location: Mathematische Annalen 178 (1968), 154–168
+  relationship: formalizes
+  note: 'Selected ordinary K5-minor density case only: n ≥ 3 and e ≥ 3n − 5. This does not formalize
+    the entire paper or assert a K5 subdivision.'
+  license: unknown
+  author_endorsement: n/a
+- title: A property of 4-chromatic graphs and some remarks on critical graphs
+  authors:
+  - G. A. Dirac
+  id: doi:10.1112/jlms/s1-27.1.85
+  type: paper
+  location: Journal of the London Mathematical Society 27 (1952), 85–92
+  relationship: formalizes
+  note: Graphs without a K4 minor (equivalently, without a subdivided K4) are 3-colourable; here via
+    a vertex of degree at most two.
+  license: unknown
+  author_endorsement: n/a
+- title: Über eine Klassifikation der Streckenkomplexe
+  authors:
+  - H. Hadwiger
+  type: paper
+  location: Vierteljahrsschrift der Naturforschenden Gesellschaft in Zürich 88 (1943), 133–142
+  relationship: formalizes
+  note: Hadwiger's conjecture and its proof for t ≤ 4; the cases t = 3 and t = 4 are formalized.
+  license: unknown
+  author_endorsement: n/a
+- title: Graph Theory (5th edition)
+  authors:
+  - Reinhard Diestel
+  id: doi:10.1007/978-3-662-53622-3
+  type: book
+  location: Graduate Texts in Mathematics 173, Springer (2017)
+  relationship: background
+  note: Proposition 7.2.1 (Mader's bound), followed for the proof.
+  license: unknown
+  author_endorsement: n/a
 related_formalizations:
-  - id: "jtraverso/planar-list-colouring and jtraverso/kuratowski"
-    relationship: "other"
-    note: "The same author's entries use the same branch-set definition of minors; this entry is self-contained (Mathlib only)."
-
+- id: jtraverso/planar-list-colouring and jtraverso/kuratowski
+  relationship: other
+  note: The same author's entries use the same branch-set definition of minors; this entry is self-contained
+    (Mathlib only).
+- id: PALOMAR-2026-10-16-000001-v1
+  relationship: builds-on
+  note: Extends jtraverso/hadwiger-mader at cb10154cd439a419d0bbf34052839dd27242b619. Preserves the
+    original five statements and proof bodies; narrows aggregate imports and localizes classical scopes.
+    Adds three compared results.
 status:
-  scope: >-
-    Proved for finite simple graphs (any universe): Mader's theorem for every r, Dirac's degree
-    lemma and the 2n − 3 edge bound for K4-minor-free graphs, and Hadwiger's conjecture for t = 3
-    and t = 4.
+  scope: 'Proved for finite simple graphs (any universe): Mader''s theorem for every r, Dirac''s degree
+    lemma and the 2n − 3 edge bound for K4-minor-free graphs, and Hadwiger''s conjecture for t = 3 and
+    t = 4. Also proved: the K5 density threshold for n ≥ 3, its 3n − 6 contrapositive bound, and finite
+    minor cardinality monotonicity. All eight selected results are proved. Challenge contains eight
+    intentional statement placeholders; Solution and library modules contain none.'
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
-
 automation:
   methods:
-    - method: "autonomous"
-      models: ["Aristotle (Harmonic)"]
-      framework: "Aristotle CLI"
-      tool_setup: >-
-        Produced all proofs in one run from the formal statements and proof plans; the return was
-        audited (statements and headers unchanged, no added axioms) and rebuilt locally.
-      cost:
-        wall_time: "under one hour"
-        spend_usd: "not tracked"
-        hardware: "API-only"
-      prompting_notes: "Formal statements and proof plans supplied."
-    - method: "agent"
-      models: ["Claude Opus 5.5"]
-      framework: "Claude Code (Anthropic)"
-      tool_setup: >-
-        Statement design, proof plans, integration and review of the Aristotle return, and the
-        Palomar packaging, checked with `lake build` and `#print axioms` (Lean v4.35.0-rc3,
-        Mathlib c55e6e786f49471c72fbddbec5415808896aec1e).
-      cost:
-        wall_time: "about one hour"
-        spend_usd: "subscription-based"
-        hardware: "local machine"
-      prompting_notes: "Natural-language instructions in Spanish, directed by the author."
-  spend_usd: "subscription-based"
-  notes: >-
-    The results were chosen by the human author; the Lean proofs are AI-generated and
-    mechanically verified (no `sorry`, axioms limited to propext, Classical.choice and
-    Quot.sound, identical elaborated types for the Challenge/Solution pair).
-
+  - method: autonomous
+    models:
+    - Aristotle (Harmonic)
+    framework: Aristotle CLI
+    tool_setup: Inherited version-1 provenance only; not a new run for this extension. Produced all
+      proofs in one run from the formal statements and proof plans; the return was audited (statements
+      and headers unchanged, no added axioms) and rebuilt locally.
+    cost:
+      wall_time: under one hour
+      spend_usd: not tracked
+      hardware: API-only
+    prompting_notes: Formal statements and proof plans supplied.
+  - method: agent
+    models:
+    - Claude Opus 5.5
+    framework: Claude Code (Anthropic)
+    tool_setup: Inherited version-1 provenance only; not a new run for this extension. Statement design,
+      proof plans, integration and review of the Aristotle return, and the Palomar packaging, checked
+      with `lake build` and `#print axioms` (Lean v4.35.0-rc3, Mathlib c55e6e786f49471c72fbddbec5415808896aec1e).
+    cost:
+      wall_time: about one hour
+      spend_usd: subscription-based
+      hardware: local machine
+    prompting_notes: Natural-language instructions in Spanish, directed by the author.
+  - method: agent
+    models:
+    - OpenAI Codex
+    framework: Codex
+    tool_setup: Constructed the K5 extension using existing contraction, cone-lifting and Dirac lemmas;
+      designed independent statements and checked strict compilation, eight axiom audits, sandboxed
+      Comparator, Lean and NanoDa. GitHub publication uses the connected GitHub plugin.
+    prompting_notes: Human-directed Spanish instructions to continue the prioritized backlog; reuse
+      existing proofs. No new Aristotle run.
+  notes: The results were chosen by the human author; the Lean proofs are AI-generated and mechanically
+    verified (no `sorry`, axioms limited to propext, Classical.choice and Quot.sound, identical elaborated
+    types for the Challenge/Solution pair). The new extension was generated and self-assessed with OpenAI
+    Codex; costs and wall time were not tracked. Historical automation records above apply only to version
+    1.
 fidelity:
-  divergences: >-
-    Minors are branch-set models (disjoint nonempty connected branch sets with an edge between
-    the branch sets of adjacent vertices). Mader's average-degree hypothesis is stated in integer
-    form 2^r · |V| ≤ 8 · |E| for a nonempty vertex type, which is average degree 2|E|/|V| at
-    least 2^(r−2). The edge bound is stated as |E| + 3 ≤ 2|V| for |V| ≥ 2.
-
+  divergences: 'Minors are branch-set models (disjoint nonempty connected branch sets with an edge between
+    the branch sets of adjacent vertices). Mader''s average-degree hypothesis is stated in integer form
+    2^r · |V| ≤ 8 · |E| for a nonempty vertex type, which is average degree 2|E|/|V| at least 2^(r−2).
+    The edge bound is stated as |E| + 3 ≤ 2|V| for |V| ≥ 2. For the K5 extension, n ≥ 3 is explicit
+    and necessary: K2 satisfies the unguarded density inequality. The integer statements 3n ≤ e + 5
+    and e + 6 ≤ 3n are equivalent to the classical threshold and contrapositive on this domain. Minors
+    are ordinary branch-set models; neither a K5 subdivision nor Hadwiger for t = 5 is claimed. The
+    selected K5 case is classical; no priority or mathematical novelty claim is made.'
 review:
-  status: "agent-reviewed"
+  status: self-assessed
   reviewers:
-    - "Claude Opus 5.5 (AI agent in Claude Code, acting for the author)"
-  notes: >-
-    Agent review by Claude Opus 5.5, distinct from the mechanical verification: the agent
-    compared the statements with the classical theorems, checked that the Aristotle return left
-    every statement and header unchanged, and confirmed by `lake build`, `#print axioms` and a
-    comparison of the fully elaborated Challenge and Solution types that the proofs use no
-    `sorry` and only propext, Classical.choice and Quot.sound. The author directed the work and
-    approved the statements. No independent human mathematical review has been performed. The
-    results are classical; no mathematical novelty is claimed.
-
+  - OpenAI Codex (implementing agent, self-assessment)
+  notes: The implementing agent checked exact theorem types, source scope, branch-set definitions, boundary
+    cases K2/K4/K5, and the eight-result axiom audit and Comparator run. Lean and NanoDa accept the
+    solution. There is no independent human mathematical review of this extension. Prior Claude/Aristotle
+    review statements in version 1 are historical and do not cover these additions. No mathematical
+    novelty is claimed; a passing mechanical preflight is not a registered new Palomar version.
 alignment:
-  namespace: "HadwigerMader"
+  namespace: HadwigerMader
   statements:
-    - source: "Mader (1967)"
-      lean: "HadwigerMader.mader"
-      module: "Challenge"
-      status: "proved"
-    - source: "Dirac (1952): K4-minor-free graphs have a vertex of degree at most two"
-      lean: "HadwigerMader.exists_degree_le_two"
-      module: "Challenge"
-      status: "proved"
-    - source: "Edge bound 2n − 3 for K4-minor-free graphs"
-      lean: "HadwigerMader.card_edgeFinset_le"
-      module: "Challenge"
-      status: "proved"
-    - source: "Hadwiger's conjecture, t = 3"
-      lean: "HadwigerMader.colorable_two_of_not_isMinor_K3"
-      module: "Challenge"
-      status: "proved"
-    - source: "Hadwiger (1943), Dirac (1952): Hadwiger's conjecture, t = 4"
-      lean: "HadwigerMader.colorable_three_of_not_isMinor_K4"
-      module: "Challenge"
-      status: "proved"
-
-acknowledgements: >-
-  Mathlib and the Lean community; Harmonic's Aristotle.
+  - source: Mader (1967)
+    lean: HadwigerMader.mader
+    module: Challenge
+    status: proved
+  - source: 'Dirac (1952): K4-minor-free graphs have a vertex of degree at most two'
+    lean: HadwigerMader.exists_degree_le_two
+    module: Challenge
+    status: proved
+  - source: Edge bound 2n − 3 for K4-minor-free graphs
+    lean: HadwigerMader.card_edgeFinset_le
+    module: Challenge
+    status: proved
+  - source: Hadwiger's conjecture, t = 3
+    lean: HadwigerMader.colorable_two_of_not_isMinor_K3
+    module: Challenge
+    status: proved
+  - source: 'Hadwiger (1943), Dirac (1952): Hadwiger''s conjecture, t = 4'
+    lean: HadwigerMader.colorable_three_of_not_isMinor_K4
+    module: Challenge
+    status: proved
+  - source: 'Finite branch-set minors: cardinality monotonicity'
+    lean: HadwigerMader.card_le_of_isMinor
+    module: Challenge
+    status: proved
+  - source: Mader (1968), selected K5 ordinary-minor density case, n ≥ 3
+    lean: HadwigerMader.mader_K5
+    module: Challenge
+    status: proved
+  - source: Contrapositive K5-minor-free edge bound 3n − 6, n ≥ 3
+    lean: HadwigerMader.card_edgeFinset_le_K5
+    module: Challenge
+    status: proved
+acknowledgements: Mathlib and the Lean community; Harmonic's Aristotle.
