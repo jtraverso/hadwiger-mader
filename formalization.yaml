@@ -6,9 +6,11 @@ project:
   description: >-
     A Lean 4 / Mathlib formalization of Mader's theorem (a nonempty finite graph of average degree
     at least 2^(r−2) has a K_r minor), of Dirac's lemma (a graph without a K4 minor has a vertex
-    of degree at most two, hence at most 2n − 3 edges for n ≥ 2), and of Hadwiger's conjecture for
-    t ≤ 4 (graphs without a K3 minor are 2-colourable, graphs without a K4 minor are
-    3-colourable). Minors are branch-set models.
+    of degree at most two, hence at most 2n − 3 edges for n ≥ 2), of Mader's bound for K5 (a graph
+    on n ≥ 3 vertices with at least 3n − 5 edges has a K5 minor; equivalently, without a K5 minor
+    it has at most 3n − 6 edges; added in version 2), and of Hadwiger's conjecture for t ≤ 4
+    (graphs without a K3 minor are 2-colourable, graphs without a K4 minor are 3-colourable).
+    Minors are branch-set models.
   authors:
     - "Juan Pablo Traverso Gianini"
   license: "Apache-2.0"
@@ -28,6 +30,20 @@ sources:
     location: "Mathematische Annalen 174 (1967), 265–268"
     relationship: "formalizes"
     note: "Average degree at least 2^(r−2) forces a K_r minor; the formal proof follows Diestel's presentation (Prop. 7.2.1)."
+    license: "unknown"
+    author_endorsement: "n/a"
+  - title: "Homomorphiesätze für Graphen"
+    authors:
+      - "W. Mader"
+    type: "paper"
+    location: "Mathematische Annalen 178 (1968), 154–168"
+    relationship: "formalizes"
+    note: >-
+      The extremal number 3n − 6 for graphs without a K5 minor (version 2). The formal proof is not
+      Mader's: it is a short minimal-counterexample argument (delete vertices of degree at most
+      three, delete surplus edges, contract edges in at most two triangles; a vertex of degree four
+      or five then has a neighbourhood with more than 2·deg − 3 edges, hence a K4 minor by Dirac's
+      bound). The cases K6 and K7 of the article are not formalized.
     license: "unknown"
     author_endorsement: "n/a"
   - title: "A property of 4-chromatic graphs and some remarks on critical graphs"
@@ -68,8 +84,10 @@ related_formalizations:
 status:
   scope: >-
     Proved for finite simple graphs (any universe): Mader's theorem for every r, Dirac's degree
-    lemma and the 2n − 3 edge bound for K4-minor-free graphs, and Hadwiger's conjecture for t = 3
-    and t = 4.
+    lemma and the 2n − 3 edge bound for K4-minor-free graphs, Mader's 3n − 6 edge bound for
+    K5-minor-free graphs (version 2), and Hadwiger's conjecture for t = 3 and t = 4. Not
+    formalized: Mader's extremal numbers for K6 and K7 minors, and the sharpness examples
+    (maximal planar graphs for K5).
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -99,6 +117,18 @@ automation:
         spend_usd: "subscription-based"
         hardware: "local machine"
       prompting_notes: "Natural-language instructions in Spanish, directed by the author."
+    - method: "agent"
+      models: ["Claude Opus 5.5"]
+      framework: "Claude Code (Anthropic)"
+      tool_setup: >-
+        Version 2: designed and wrote the proof of the K5 bound (CliqueMinorsLib/MaderFive.lean)
+        and its two statements, checked with a local build, a comparison of the elaborated
+        Challenge and Solution statements (pp.all) and #print axioms.
+      cost:
+        wall_time: "under one hour"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "Natural-language instructions in Spanish, directed by the author."
   spend_usd: "subscription-based"
   notes: >-
     The results were chosen by the human author; the Lean proofs are AI-generated and
@@ -110,7 +140,9 @@ fidelity:
     Minors are branch-set models (disjoint nonempty connected branch sets with an edge between
     the branch sets of adjacent vertices). Mader's average-degree hypothesis is stated in integer
     form 2^r · |V| ≤ 8 · |E| for a nonempty vertex type, which is average degree 2|E|/|V| at
-    least 2^(r−2). The edge bound is stated as |E| + 3 ≤ 2|V| for |V| ≥ 2.
+    least 2^(r−2). The edge bound is stated as |E| + 3 ≤ 2|V| for |V| ≥ 2. Mader's K5 bound is
+    stated as 3|V| ≤ |E| + 5 ⇒ K5 minor and, equivalently, K5-minor-free ⇒ |E| + 6 ≤ 3|V|, both
+    for |V| ≥ 3.
 
 review:
   status: "agent-reviewed"
@@ -138,6 +170,14 @@ alignment:
       status: "proved"
     - source: "Edge bound 2n − 3 for K4-minor-free graphs"
       lean: "HadwigerMader.card_edgeFinset_le"
+      module: "Challenge"
+      status: "proved"
+    - source: "Mader (1968): at least 3n − 5 edges force a K5 minor"
+      lean: "HadwigerMader.isMinor_K5_of_card_edgeFinset"
+      module: "Challenge"
+      status: "proved"
+    - source: "Mader (1968): edge bound 3n − 6 for K5-minor-free graphs"
+      lean: "HadwigerMader.card_edgeFinset_le_of_not_isMinor_K5"
       module: "Challenge"
       status: "proved"
     - source: "Hadwiger's conjecture, t = 3"

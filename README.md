@@ -12,7 +12,11 @@ This repository formalizes, for finite simple graphs:
      (`HadwigerMader.exists_degree_le_two`).
    - Such a graph on `n ≥ 2` vertices has at most `2n − 3` edges
      (`HadwigerMader.card_edgeFinset_le`).
-3. **Hadwiger's conjecture for `t ≤ 4`** (Hadwiger 1943, Dirac 1952).
+3. **Mader (1968), `K₅`.** A graph on `n ≥ 3` vertices with at least `3n − 5` edges has a `K₅`
+   minor (`HadwigerMader.isMinor_K5_of_card_edgeFinset`); equivalently, without a `K₅` minor it
+   has at most `3n − 6` edges (`HadwigerMader.card_edgeFinset_le_of_not_isMinor_K5`). Added in
+   version 2.
+4. **Hadwiger's conjecture for `t ≤ 4`** (Hadwiger 1943, Dirac 1952).
    - A graph without a `K₃` minor is 2-colourable (`HadwigerMader.colorable_two_of_not_isMinor_K3`).
    - A graph without a `K₄` minor is 3-colourable
      (`HadwigerMader.colorable_three_of_not_isMinor_K4`).
@@ -49,6 +53,12 @@ contracted graph or in a neighbourhood graph lift back to `G`.
     `a–b–c`, with degree conditions on `a`, `b` and `c`.
   - Deleting `x` and `b` and adding the edge `ac` gives a smaller minor. It has minimum degree at
     least 3, which contradicts minimality.
+* **Mader's `K₅` bound** (`CliqueMinorsLib/MaderFive.lean`). Take a counterexample with at
+  least `3n − 5` edges that is minimal under deleting vertices of degree at most three, deleting
+  edges and contracting edges. Then it has exactly `3n − 5` edges, minimum degree at least `4`,
+  and every edge lies in at least three triangles. A vertex `x` of degree `4` or `5` exists, and
+  its neighbourhood has at least `3 · deg x / 2 > 2 · deg x − 3` edges. By the `K₄` edge bound
+  that neighbourhood has a `K₄` minor, and `x` completes it to a `K₅` minor.
 * **Edge bound and Hadwiger for `t = 4`.** Remove a vertex of degree at most two and induct. For
   colouring, the removed vertex finds a colour that its at most two neighbours do not use.
 * **Hadwiger for `t = 3`.** A cycle contracts to `K₃`, so the graph is a forest, and forests are
@@ -58,6 +68,7 @@ contracted graph or in a neighbourhood graph lift back to `G`.
 
 * W. Mader, *Homomorphieeigenschaften und mittlere Kantendichte von Graphen*, Math. Ann. 174
   (1967) 265–268, doi:10.1007/BF01364272.
+* W. Mader, *Homomorphiesätze für Graphen*, Math. Ann. 178 (1968) 154–168.
 * G. A. Dirac, *A property of 4-chromatic graphs and some remarks on critical graphs*, J. London
   Math. Soc. 27 (1952) 85–92, doi:10.1112/jlms/s1-27.1.85.
 * H. Hadwiger, *Über eine Klassifikation der Streckenkomplexe*, Vierteljahrsschr. Naturforsch.
@@ -68,8 +79,9 @@ contracted graph or in a neighbourhood graph lift back to `G`.
 ## Authorship and use of AI
 
 The author chose the results. The statements and proof plans were written with Claude in Claude
-Code. Harmonic's Aristotle produced the proofs, which were audited and rebuilt locally. Lean
-checks everything mechanically. See `formalization.yaml`.
+Code. Harmonic's Aristotle produced the proofs of version 1, which were audited and rebuilt
+locally; Claude Opus 5.5 wrote the proof of Mader's `K₅` bound added in version 2. Lean checks
+everything mechanically. See `formalization.yaml`.
 
 ## Building
 

@@ -18,6 +18,9 @@ For finite simple graphs, with minors given by branch-set models (`MinorModel`):
   a vertex of degree at most two.
 * `HadwigerMader.card_edgeFinset_le`: a graph on `n ≥ 2` vertices without a `K₄` minor has at most
   `2n - 3` edges.
+* `HadwigerMader.isMinor_K5_of_card_edgeFinset`, `HadwigerMader.card_edgeFinset_le_of_not_isMinor_K5`:
+  **Mader (1968).** A graph on `n ≥ 3` vertices with at least `3n - 5` edges has a `K₅` minor;
+  equivalently, without a `K₅` minor it has at most `3n - 6` edges.
 * `HadwigerMader.colorable_two_of_not_isMinor_K3`,
   `HadwigerMader.colorable_three_of_not_isMinor_K4`: **Hadwiger's conjecture for `t ≤ 4`**
   (Hadwiger 1943, Dirac 1952): a finite graph without a `K_t` minor is `(t - 1)`-colourable for
@@ -64,6 +67,19 @@ theorem exists_degree_le_two [Fintype V] [Nonempty V] (G : SimpleGraph V) [Decid
 theorem card_edgeFinset_le [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (hn : 2 ≤ Fintype.card V) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 4)) G) :
     G.edgeFinset.card + 3 ≤ 2 * Fintype.card V := by
+  sorry
+
+/-- **Mader (1968).** A finite graph on `n ≥ 3` vertices with at least `3n - 5` edges has a `K₅`
+minor. -/
+theorem isMinor_K5_of_card_edgeFinset [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hn : 3 ≤ Fintype.card V) (h : 3 * Fintype.card V ≤ G.edgeFinset.card + 5) :
+    IsMinor (⊤ : SimpleGraph (Fin 5)) G := by
+  sorry
+
+/-- A finite graph on `n ≥ 3` vertices without a `K₅` minor has at most `3n - 6` edges. -/
+theorem card_edgeFinset_le_of_not_isMinor_K5 [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hn : 3 ≤ Fintype.card V) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 5)) G) :
+    G.edgeFinset.card + 6 ≤ 3 * Fintype.card V := by
   sorry
 
 /-- **Hadwiger's conjecture for `t = 3`.** A finite graph without a `K₃` minor (a forest) is

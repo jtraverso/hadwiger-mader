@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import CliqueMinorsLib.Minors
+public import CliqueMinorsLib.MaderFive
 
 /-!
 # Proofs of the statements in `Challenge.lean`
@@ -15,7 +16,7 @@ The definitions below are verbatim copies of those in `Challenge.lean`; minor mo
 by field with `CliqueMinors.MinorModel` of `CliqueMinorsLib/Minors.lean`, where the theorems are
 proved (Mader's theorem by induction on `r` and on the number of vertices with edge contractions;
 Dirac's lemma by a minimal counterexample; Hadwiger's conjecture for `t ≤ 4` by colouring greedily
-along vertices of degree at most two).
+along vertices of degree at most two; Mader's `K₅` bound in `CliqueMinorsLib/MaderFive.lean`).
 -/
 
 @[expose] public section
@@ -67,6 +68,25 @@ theorem card_edgeFinset_le [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (hn : 2 ≤ Fintype.card V) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 4)) G) :
     G.edgeFinset.card + 3 ≤ 2 * Fintype.card V :=
   CliqueMinors.card_edgeFinset_le G hn (fun h' => h ((isMinor_iff_lib _ G).2 h'))
+
+/-- **Mader (1968).** A finite graph on `n ≥ 3` vertices with at least `3n - 5` edges has a `K₅`
+minor. -/
+theorem isMinor_K5_of_card_edgeFinset [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hn : 3 ≤ Fintype.card V) (h : 3 * Fintype.card V ≤ G.edgeFinset.card + 5) :
+    IsMinor (⊤ : SimpleGraph (Fin 5)) G := by
+  classical
+  refine (isMinor_iff_lib _ G).2 (CliqueMinors.isMinor_K5_of_card_edgeFinset G hn ?_)
+  convert h using 2
+  congr 1
+  ext e
+  simp
+
+/-- A finite graph on `n ≥ 3` vertices without a `K₅` minor has at most `3n - 6` edges. -/
+theorem card_edgeFinset_le_of_not_isMinor_K5 [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hn : 3 ≤ Fintype.card V) (h : ¬ IsMinor (⊤ : SimpleGraph (Fin 5)) G) :
+    G.edgeFinset.card + 6 ≤ 3 * Fintype.card V := by
+  by_contra hlt
+  exact h (isMinor_K5_of_card_edgeFinset G hn (by omega))
 
 /-- **Hadwiger's conjecture for `t = 3`.** A finite graph without a `K₃` minor (a forest) is
 2-colourable. -/
